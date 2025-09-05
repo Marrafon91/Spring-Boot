@@ -4,6 +4,7 @@ import io.github.marrafon91.projetosapi.model.Produto;
 import io.github.marrafon91.projetosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,6 +46,11 @@ public class ProdutoController {
                           @RequestBody Produto produto) {
         produto.setId(id);
         produtoRepository.save(produto);
+    }
+
+    @GetMapping
+    public List<Produto> buscar(@RequestParam("nome") String nome) {
+     return produtoRepository.findByNome(nome);
     }
 
 }
