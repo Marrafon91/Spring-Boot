@@ -9,3 +9,4 @@ spring:
 app:
   config:
     variavel: Valor da variavel X
+    valor1: 500
