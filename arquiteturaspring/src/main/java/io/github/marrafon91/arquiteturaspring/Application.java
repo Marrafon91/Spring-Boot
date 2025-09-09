@@ -15,6 +15,7 @@ public class Application {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(Application.class);
 		builder.bannerMode(Banner.Mode.OFF);
 		builder.profiles("producao");
+//		builder.lazyInitialization(true);
 
 		
 		builder.run(args);
