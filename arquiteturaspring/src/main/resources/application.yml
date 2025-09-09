@@ -5,3 +5,7 @@ spring:
     show-sql: true
   main:
     lazy-initialization: false
+
+app:
+  config:
+    variavel: Valor da variavel X
