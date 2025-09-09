@@ -11,7 +11,7 @@ public class TodoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "Descricao")
+    @Column(name = "descricao")
     private String descricao;
 
     @Column(name = "fl_concluido")
@@ -25,19 +25,19 @@ public class TodoEntity {
         this.id = id;
     }
 
-    public Boolean getConcluido() {
-        return concluido;
-    }
-
-    public void setConcluido(Boolean concluido) {
-        this.concluido = concluido;
-    }
-
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Boolean getConcluido() {
+        return concluido;
+    }
+
+    public void setConcluido(Boolean concluido) {
+        this.concluido = concluido;
     }
 }
