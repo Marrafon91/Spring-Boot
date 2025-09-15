@@ -1,7 +1,9 @@
 package io.github.marrafon91.libaryapi.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +14,7 @@ import java.util.UUID;
 @Table(name = "livro")
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString(exclude = "autor")
 public class Livro {
 
     @Id
@@ -109,16 +111,4 @@ public class Livro {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "Livro{" +
-                "id=" + id +
-                ", isbn='" + isbn + '\'' +
-                ", titulo='" + titulo + '\'' +
-                ", dataPublicacao=" + dataPublicacao +
-                ", genero=" + genero +
-                ", preco=" + preco +
-                ", autor=" + autor +
-                '}';
-    }
 }

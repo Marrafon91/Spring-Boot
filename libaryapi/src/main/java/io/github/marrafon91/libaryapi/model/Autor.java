@@ -4,6 +4,7 @@ package io.github.marrafon91.libaryapi.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,9 +13,10 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "autor")
+@Table(name = "autor", schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "livros")
 public class Autor {
 
     @Id
@@ -31,7 +33,7 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Livro> livros;
 
     public UUID getId() {
@@ -85,16 +87,5 @@ public class Autor {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Autor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", nacionalidade='" + nacionalidade + '\'' +
-                ", livros=" + livros +
-                '}';
     }
 }
