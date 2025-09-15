@@ -162,4 +162,16 @@ class LivroRepositoryTest {
         resultado.forEach(System.out::println);
     }
 
+    @Test
+    void listarPorGeneroQueryParamTest() {
+        var resultado = repository.findByGenero(GeneroLivro.FANTASIA, "preco");
+        resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void listarPorGeneroPositionalParamTest() {
+        var resultado = repository.findByGeneroPositionalParameters(GeneroLivro.FANTASIA, "preco");
+        resultado.forEach(System.out::println);
+    }
+
 }

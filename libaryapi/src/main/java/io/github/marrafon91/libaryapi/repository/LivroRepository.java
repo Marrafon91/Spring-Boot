@@ -1,9 +1,11 @@
 package io.github.marrafon91.libaryapi.repository;
 
 import io.github.marrafon91.libaryapi.model.Autor;
+import io.github.marrafon91.libaryapi.model.GeneroLivro;
 import io.github.marrafon91.libaryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ import java.util.UUID;
 /**
  * @see LivroRepositoryTest
  */
+
 public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
     //https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
@@ -54,7 +57,6 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
 //    List<String> listarNomesDiferentesLivros();
 //  estou sem repeticao no Banco para usar o DISTINCT entao quebra a aplicacao
 
-
     @Query("""
             select l.genero
             from Livro l
@@ -63,4 +65,15 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
             order by l.genero
             """)
     List<String> listarGeneroAutoresBrasileiros();
+
+    //named parameters -> paramentros nomeados
+    @Query("select l from Livro l where l.genero = :genero order by :paramOrdenacao")
+    List<Livro> findByGenero(
+            @Param("genero") GeneroLivro generoLivro,
+            @Param("paramOrdenacao") String nomePropriedade);
+
+    //positional parameters
+    @Query("select l from Livro l where l.genero = ?1 order by ?2")
+    List<Livro> findByGeneroPositionalParameters(GeneroLivro generoLivro, String nomePropriedade);
+
 }
