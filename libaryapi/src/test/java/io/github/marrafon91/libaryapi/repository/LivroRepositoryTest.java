@@ -6,6 +6,7 @@ import io.github.marrafon91.libaryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -94,6 +95,25 @@ class LivroRepositoryTest {
     void deletar() {
         UUID id = UUID.fromString("804e511f-c719-4411-b0d9-dd0525e977b4");
         repository.deleteById(id);
+    }
+    //Deleta todos se tiver cascade setado na entidade.
+    //@ManyToOne(cascade = CascadeType.ALL)
+    @Test
+    void deletarCascada() {
+        UUID id = UUID.fromString("804e511f-c719-4411-b0d9-dd0525e977b4");
+        repository.deleteById(id);
+    }
+
+    @Test
+    @Transactional
+    void buscarLivroTest() {
+        UUID id = UUID.fromString("647cd6db-d2f7-4b49-be0e-a64b0cf6b506");
+        Livro livro = repository.findById(id).orElse(null);
+
+        System.out.println("Livro: ");
+        System.out.println(livro.getTitulo());
+//        System.out.println("Autor: ");
+//        System.out.println(livro.getAutor().getName());
     }
 
 }
