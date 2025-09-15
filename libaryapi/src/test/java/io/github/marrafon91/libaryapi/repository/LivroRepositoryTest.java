@@ -37,4 +37,44 @@ class LivroRepositoryTest {
         repository.save(livro);
     }
 
+    @Test
+    public void salvarAutorELivroTest() {
+        Livro livro = new Livro();
+        livro.setIsbn("90887-84874");
+        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setGenero(GeneroLivro.FANTASIA);
+        livro.setTitulo("Fabrica de chocolate");
+        livro.setDataPublicacao(LocalDate.of(1999, 10, 14));
+
+        Autor autor = new Autor();
+        autor.setName("Anderson");
+        autor.setNacionalidade("Brasileiro");
+        autor.setDataNascimento(LocalDate.of(1943, 8, 31));
+
+        autorRepository.save(autor);
+
+        livro.setAutor(autor);
+
+        repository.save(livro);
+    }
+
+    @Test
+    public void salvarCascadeTest() {
+        Livro livro = new Livro();
+        livro.setIsbn("90887-84874");
+        livro.setPreco(BigDecimal.valueOf(100));
+        livro.setGenero(GeneroLivro.FANTASIA);
+        livro.setTitulo("Senhor dos Aneis");
+        livro.setDataPublicacao(LocalDate.of(1995, 1, 2));
+
+        Autor autor = new Autor();
+        autor.setName("João");
+        autor.setNacionalidade("Brasileiro");
+        autor.setDataNascimento(LocalDate.of(1960, 7, 19));
+
+        livro.setAutor(autor);
+
+        repository.save(livro);
+    }
+
 }
