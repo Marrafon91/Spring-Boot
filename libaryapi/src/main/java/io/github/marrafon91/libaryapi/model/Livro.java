@@ -38,7 +38,7 @@ public class Livro {
     @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_autor")
     private  Autor autor;
 
@@ -120,6 +120,7 @@ public class Livro {
                 ", dataPublicacao=" + dataPublicacao +
                 ", genero=" + genero +
                 ", preco=" + preco +
+                ", autor=" + autor +
                 '}';
     }
 }

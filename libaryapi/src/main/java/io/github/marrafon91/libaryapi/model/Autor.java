@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "autor", schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "livros")
+//@ToString(exclude = "livros")
 public class Autor {
 
     @Id
@@ -33,7 +33,7 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Livro> livros;
 
     public UUID getId() {
@@ -87,5 +87,15 @@ public class Autor {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", nacionalidade='" + nacionalidade + '\'' +
+                '}';
     }
 }

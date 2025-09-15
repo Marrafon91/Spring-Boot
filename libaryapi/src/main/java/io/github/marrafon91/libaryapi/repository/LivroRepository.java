@@ -3,16 +3,20 @@ package io.github.marrafon91.libaryapi.repository;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @see LivroRepositoryTest
+ */
 public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
     //https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
-    
+
     //@Querry Method
     //select * from livro where id_autor = id
     List<Livro> findByAutor(Autor autor);
@@ -31,4 +35,32 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
     //select * from livro where data_publicacao between ? and ?
     List<Livro> findByDataPublicacaoBetween(LocalDate inicio, LocalDate fim);
+
+    //JPQL -> referencia as entidades e as propriedades das entidades
+    // select l.* from livro as l order by l.titulo, l.preco;
+    @Query("select l from Livro as l order by l.titulo, l.preco ")
+    List<Livro> listarTodosOrdenadoPorTituloAndPreco();
+
+    /**
+     * select a.*
+     * from livro l
+     * join autor a on a.id = l.id_autor;
+     */
+    @Query(" select a from Livro l join l.autor a ")
+    List<Autor> listarAutoresDosLivros();
+
+// select distinct l.* from livro l
+//    @Query("select distinct l.titulo from Livros l")
+//    List<String> listarNomesDiferentesLivros();
+//  estou sem repeticao no Banco para usar o DISTINCT entao quebra a aplicacao
+
+
+    @Query("""
+            select l.genero
+            from Livro l
+            join l.autor a
+            where a.nacionalidade = 'Brasileiro'
+            order by l.genero
+            """)
+    List<String> listarGeneroAutoresBrasileiros();
 }
