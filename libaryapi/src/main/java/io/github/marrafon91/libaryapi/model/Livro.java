@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "livro")
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "autor")
+//@ToString(exclude = "autor")
 public class Livro {
 
     @Id
@@ -111,4 +111,15 @@ public class Livro {
         return Objects.hashCode(id);
     }
 
+    @Override
+    public String toString() {
+        return "Livro{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", dataPublicacao=" + dataPublicacao +
+                ", genero=" + genero +
+                ", preco=" + preco +
+                '}';
+    }
 }

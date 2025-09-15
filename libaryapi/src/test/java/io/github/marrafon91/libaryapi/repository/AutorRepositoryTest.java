@@ -120,7 +120,6 @@ public class AutorRepositoryTest {
         List<Livro> livrosLista = livroRepository.findByAutor(autor);
         autor.setLivros(livrosLista);
 
-
         autor.getLivros().forEach(System.out::println);
     }
 }
