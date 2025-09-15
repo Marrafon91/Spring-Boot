@@ -26,8 +26,8 @@ class LivroRepositoryTest {
         livro.setIsbn("90887-84874");
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FANTASIA);
-        livro.setTitulo("Senor do Aneis");
-        livro.setDataPublicacao(LocalDate.of(1995, 1, 2));
+        livro.setTitulo("Meu malvado favorito");
+        livro.setDataPublicacao(LocalDate.of(2009, 7, 13));
 
         Autor autor = autorRepository.
                 findById(UUID.fromString("c4351ef2-c8c1-4a9d-aa6c-f0207f8c5900"))
@@ -75,6 +75,25 @@ class LivroRepositoryTest {
         livro.setAutor(autor);
 
         repository.save(livro);
+    }
+
+    @Test
+    void atualizarAutorDoLivro() {
+        UUID id = UUID.fromString("c6f60b39-938a-4aef-a06b-91c34630cef8");
+        var livroParaAtualizar = repository.findById(id).orElse(null);
+
+        UUID idAutor = UUID.fromString("c6f60b39-938a-4aef-a06b-91c34630cef8");
+        Autor maria = autorRepository.findById(idAutor).orElse(null);
+
+        livroParaAtualizar.setAutor(maria);
+
+        repository.save(livroParaAtualizar);
+    }
+
+    @Test
+    void deletar() {
+        UUID id = UUID.fromString("804e511f-c719-4411-b0d9-dd0525e977b4");
+        repository.deleteById(id);
     }
 
 }

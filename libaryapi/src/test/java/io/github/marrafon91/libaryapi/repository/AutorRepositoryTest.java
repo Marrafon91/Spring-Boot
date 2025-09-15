@@ -23,15 +23,13 @@ public class AutorRepositoryTest {
         autor.setNacionalidade("Brasileira");
         autor.setDataNascimento(LocalDate.of(1960, 7, 19));
 
-
         var autorSalvo = repository.save(autor);
         System.out.println("Autor Salvo: " + autorSalvo);
-
     }
 
     @Test
     public void atualizarTest() {
-       var id = UUID.fromString("0e717e1a-b62a-4e4c-94c1-720cdd3ad221");
+       var id = UUID.fromString("c4351ef2-c8c1-4a9d-aa6c-f0207f8c5900");
 
        Optional<Autor> possivelAutor = repository.findById(id);
 
@@ -60,14 +58,20 @@ public class AutorRepositoryTest {
 
     @Test
     public void deletePorIdTest() {
-        var id = UUID.fromString("3bc00804-6eec-4d07-b5fa-5f87e9b9f1d8");
+        var id = UUID.fromString("804e511f-c719-4411-b0d9-dd0525e977b4");
         repository.deleteById(id);
     }
 
     @Test
     public void deleteTest() {
-        var id = UUID.fromString("34c242ab-9e80-4965-91cb-02958fe1024d");
+        var id = UUID.fromString("c4351ef2-c8c1-4a9d-aa6c-f0207f8c5900");
         var maria = repository.findById(id).get();
         repository.delete(maria);
+    }
+
+    @Test
+    void atualizarAutorDoLivro() {
+        UUID id = UUID.fromString("804e511f-c719-4411-b0d9-dd0525e977b4");
+        var livroParaAutalizar = repository.findById(id).orElse(null);
     }
 }
