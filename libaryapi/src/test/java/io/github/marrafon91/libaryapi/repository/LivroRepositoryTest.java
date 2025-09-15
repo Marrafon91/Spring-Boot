@@ -25,17 +25,17 @@ class LivroRepositoryTest {
     @Test
     public void salvarTest() {
         Livro livro = new Livro();
-        livro.setIsbn("90887-84874");
-        livro.setPreco(BigDecimal.valueOf(100));
-        livro.setGenero(GeneroLivro.FANTASIA);
-        livro.setTitulo("Meu malvado favorito");
-        livro.setDataPublicacao(LocalDate.of(2009, 7, 13));
+        livro.setIsbn("19453-20032");
+        livro.setPreco(BigDecimal.valueOf(500));
+        livro.setGenero(GeneroLivro.CIENCIA);
+        livro.setTitulo("Ciencias Aplicada");
+        livro.setDataPublicacao(LocalDate.of(2015, 11, 20));
 
         Autor autor = autorRepository.
                 findById(UUID.fromString("c4351ef2-c8c1-4a9d-aa6c-f0207f8c5900"))
                 .orElse(null);
 
-        livro.setAutor(autor);
+//        livro.setAutor(autor);
         repository.save(livro);
     }
 
@@ -172,6 +172,16 @@ class LivroRepositoryTest {
     void listarPorGeneroPositionalParamTest() {
         var resultado = repository.findByGeneroPositionalParameters(GeneroLivro.FANTASIA, "preco");
         resultado.forEach(System.out::println);
+    }
+
+    @Test
+    void deletePorGeneroTest() {
+        repository.deleteByGenero(GeneroLivro.CIENCIA);
+    }
+
+    @Test
+    void updateDataPublicacaoTest() {
+        repository.updateDataPuplicacao(LocalDate.of(2000,1, 1));
     }
 
 }
