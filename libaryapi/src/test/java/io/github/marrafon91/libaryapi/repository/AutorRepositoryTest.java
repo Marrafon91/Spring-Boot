@@ -1,20 +1,24 @@
 package io.github.marrafon91.libaryapi.repository;
 
 import io.github.marrafon91.libaryapi.model.Autor;
+import io.github.marrafon91.libaryapi.model.GeneroLivro;
+import io.github.marrafon91.libaryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @SpringBootTest
 public class AutorRepositoryTest {
 
     @Autowired
     AutorRepository repository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     public void salvarTest() {
@@ -73,5 +77,36 @@ public class AutorRepositoryTest {
     void atualizarAutorDoLivro() {
         UUID id = UUID.fromString("804e511f-c719-4411-b0d9-dd0525e977b4");
         var livroParaAutalizar = repository.findById(id).orElse(null);
+    }
+
+    @Test
+    void salvarAutorComLivrosTest() {
+        Autor autor = new Autor();
+        autor.setName("Antonio");
+        autor.setNacionalidade("Americano");
+        autor.setDataNascimento(LocalDate.of(1970, 8, 5));
+
+        Livro livro = new Livro();
+        livro.setIsbn("76533-87114");
+        livro.setPreco(BigDecimal.valueOf(204));
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setTitulo("O roubo a casa assombrada");
+        livro.setDataPublicacao(LocalDate.of(1999, 7, 12));
+        livro.setAutor(autor);
+
+        Livro livro2 = new Livro();
+        livro2.setIsbn("41320-77389");
+        livro2.setPreco(BigDecimal.valueOf(159));
+        livro2.setGenero(GeneroLivro.ROMANCE);
+        livro2.setTitulo("A verdade nua e crua");
+        livro2.setDataPublicacao(LocalDate.of(2009, 11, 25));
+        livro2.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livro);
+        autor.getLivros().add(livro2);
+
+        repository.save(autor);
+        livroRepository.saveAll(autor.getLivros());
     }
 }
