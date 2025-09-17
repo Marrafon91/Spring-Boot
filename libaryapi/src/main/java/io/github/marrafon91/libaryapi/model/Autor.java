@@ -5,8 +5,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -16,6 +20,7 @@ import java.util.UUID;
 @Table(name = "autor", schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 //@ToString(exclude = "livros")
 public class Autor {
 
@@ -35,6 +40,17 @@ public class Autor {
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Livro> livros;
+
+    @CreatedDate
+    @Column(name = "data_cadastro")
+    private LocalDateTime dataCadastro;
+
+    @LastModifiedDate
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @Column(name = "id_usuario")
+    private UUID idUsuario;
 
     public UUID getId() {
         return id;
@@ -76,6 +92,30 @@ public class Autor {
         this.livros = livros;
     }
 
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public UUID getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(UUID idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,6 +136,9 @@ public class Autor {
                 ", name='" + name + '\'' +
                 ", dataNascimento=" + dataNascimento +
                 ", nacionalidade='" + nacionalidade + '\'' +
+                ", dataCadastro=" + dataCadastro +
+                ", dataAtualizacao=" + dataAtualizacao +
+                ", idUsuario=" + idUsuario +
                 '}';
     }
 }
