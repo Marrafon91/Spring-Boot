@@ -14,7 +14,7 @@ public record AutorDTO(
 
     public Autor mapearParaAutor() {
         Autor autor = new Autor();
-        autor.setName(this.nome);
+        autor.setNome(this.nome);
         autor.setDataNascimento(this.dataNascimento);
         autor.setNacionalidade(this.nacionalidade);
         return autor;

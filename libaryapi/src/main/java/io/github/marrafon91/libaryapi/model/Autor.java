@@ -4,7 +4,6 @@ package io.github.marrafon91.libaryapi.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,7 +29,7 @@ public class Autor {
     private UUID id;
 
     @Column(name = "nome", length = 100, nullable = false)
-    private String name;
+    private String nome;
 
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
@@ -60,12 +59,12 @@ public class Autor {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public LocalDate getDataNascimento() {
@@ -133,7 +132,7 @@ public class Autor {
     public String toString() {
         return "Autor{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + nome + '\'' +
                 ", dataNascimento=" + dataNascimento +
                 ", nacionalidade='" + nacionalidade + '\'' +
                 ", dataCadastro=" + dataCadastro +

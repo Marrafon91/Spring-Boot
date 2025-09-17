@@ -49,7 +49,7 @@ class LivroRepositoryTest {
         livro.setDataPublicacao(LocalDate.of(1999, 10, 14));
 
         Autor autor = new Autor();
-        autor.setName("Anderson");
+        autor.setNome("Anderson");
         autor.setNacionalidade("Brasileiro");
         autor.setDataNascimento(LocalDate.of(1943, 8, 31));
 
@@ -70,7 +70,7 @@ class LivroRepositoryTest {
         livro.setDataPublicacao(LocalDate.of(1995, 1, 2));
 
         Autor autor = new Autor();
-        autor.setName("João");
+        autor.setNome("João");
         autor.setNacionalidade("Brasileiro");
         autor.setDataNascimento(LocalDate.of(1960, 7, 19));
 

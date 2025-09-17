@@ -52,7 +52,7 @@ public class TransacaoService {
     public void executar() {
         // salva o autor
         Autor autor = new Autor();
-        autor.setName("Francisca");
+        autor.setNome("Francisca");
         autor.setNacionalidade("Mexicana");
         autor.setDataNascimento(LocalDate.of(1983, 10, 31));
 
@@ -70,7 +70,7 @@ public class TransacaoService {
 
         livroRepository.save(livro);
 
-        if(autor.getName().equals("Teste Francisca")) {
+        if(autor.getNome().equals("Teste Francisca")) {
             throw new RuntimeException("Rollback!");
         }
     }
