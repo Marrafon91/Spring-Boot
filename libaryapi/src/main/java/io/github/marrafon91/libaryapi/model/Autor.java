@@ -17,8 +17,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "autor", schema = "public")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 //@ToString(exclude = "livros")
 public class Autor {

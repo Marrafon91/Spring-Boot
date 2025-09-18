@@ -3,6 +3,7 @@ package io.github.marrafon91.libaryapi.service;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.repository.AutorRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,14 @@ public class AutorService {
 
     public Autor salvar(Autor autor) {
         return repository.save(autor);
+    }
+
+    @Transactional
+    public void atualizar(Autor autor) {
+        if (autor.getId() == null) {
+            throw new IllegalArgumentException("Para atualizar, é necessario que o autor ja esteja salvo na base.");
+        }
+         repository.save(autor);
     }
 
     public Optional<Autor> obterPorId(UUID id) {
