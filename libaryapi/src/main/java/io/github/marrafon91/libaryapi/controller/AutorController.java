@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("autores")
+//@RequiredArgsConstructor (cria tods construtor injetado com final, meu LOMBOK esta com erro nessa aplicacao)
+
 public class AutorController {
 
     private final AutorService service;
