@@ -1,6 +1,8 @@
 package io.github.marrafon91.libaryapi.controller;
 
 import io.github.marrafon91.libaryapi.controller.dto.AutorDTO;
+import io.github.marrafon91.libaryapi.controller.dto.ErroResposta;
+import io.github.marrafon91.libaryapi.exceptions.RegistroDuplicadoException;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.service.AutorService;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +27,9 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody AutorDTO autor) {
-        var autorEntidade = autor.mapearParaAutor();
+    public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
+        try {
+        Autor autorEntidade = autor.mapearParaAutor();
         service.salvar(autorEntidade);
 
         URI location = ServletUriComponentsBuilder
@@ -36,6 +39,10 @@ public class AutorController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+        } catch (RegistroDuplicadoException e) {
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+        }
     }
 
     @GetMapping("{id}")
