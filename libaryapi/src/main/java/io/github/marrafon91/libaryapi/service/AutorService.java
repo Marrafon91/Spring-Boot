@@ -1,7 +1,9 @@
 package io.github.marrafon91.libaryapi.service;
 
+import io.github.marrafon91.libaryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.repository.AutorRepository;
+import io.github.marrafon91.libaryapi.repository.LivroRepository;
 import io.github.marrafon91.libaryapi.validator.AutorValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,12 @@ public class AutorService {
 
     private final AutorRepository repository;
     private final AutorValidator validator;
+    private final LivroRepository livroRepository;
 
-    public AutorService(AutorRepository repository, AutorValidator validator){
+    public AutorService(AutorRepository repository, AutorValidator validator, LivroRepository livroRepository){
         this.repository = repository;
         this.validator = validator;
+        this.livroRepository = livroRepository;
     }
 
     public Autor salvar(Autor autor) {
@@ -40,6 +44,9 @@ public class AutorService {
     }
 
     public void deletar(Autor autor) {
+        if (possuiLivro(autor)) {
+            throw new OperacaoNaoPermitidaException("Não é permitido excluir um Autor que possui livros cadastrados!");
+        }
         repository.delete(autor);
     }
 
@@ -57,6 +64,10 @@ public class AutorService {
         }
 
         return repository.findAll();
+    }
+
+    public boolean possuiLivro(Autor autor) {
+        return livroRepository.existsByAutor(autor);
     }
 }
 
