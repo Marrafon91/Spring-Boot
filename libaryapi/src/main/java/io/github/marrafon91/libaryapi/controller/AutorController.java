@@ -6,6 +6,7 @@ import io.github.marrafon91.libaryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.marrafon91.libaryapi.exceptions.RegistroDuplicadoException;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.service.AutorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,7 +31,7 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autor) {
         try {
             Autor autorEntidade = autor.mapearParaAutor();
             service.salvar(autorEntidade);
