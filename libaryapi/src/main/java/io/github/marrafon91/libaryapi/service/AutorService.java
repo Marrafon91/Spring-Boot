@@ -5,6 +5,8 @@ import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.repository.AutorRepository;
 import io.github.marrafon91.libaryapi.repository.LivroRepository;
 import io.github.marrafon91.libaryapi.validator.AutorValidator;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +67,20 @@ public class AutorService {
         }
 
         return repository.findAll();
+    }
+
+    public List<Autor> pesquisaByExample(String nome, String nacionalidade) {
+        var autor = new Autor();
+        autor.setNome(nome);
+        autor.setNacionalidade(nacionalidade);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Autor> autorExample = Example.of(autor, matcher);
+        return repository.findAll(autorExample);
     }
 
     public boolean possuiLivro(Autor autor) {
