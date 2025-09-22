@@ -26,7 +26,6 @@ public class AutorController {
     private final AutorService service;
 
     public AutorController(AutorService service) {
-
         this.service = service;
     }
 

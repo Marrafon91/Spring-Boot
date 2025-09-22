@@ -3,18 +3,23 @@ package io.github.marrafon91.libaryapi.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+//@ToString(exclude = "autor")
+//@Data
 @Entity
 @Table(name = "livro")
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString(exclude = "autor")
+@EntityListeners(AuditingEntityListener.class)
 public class Livro {
 
     @Id
@@ -41,6 +46,17 @@ public class Livro {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_autor")
     private  Autor autor;
+
+    @CreatedDate
+    @Column(name = "data_cadastro")
+    private LocalDateTime dataCadastro;
+
+    @LastModifiedDate
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @Column(name = "id_usuario")
+    private UUID idUsuario;
 
     public UUID getId() {
         return id;
@@ -98,6 +114,30 @@ public class Livro {
         this.autor = autor;
     }
 
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public UUID getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(UUID idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,7 +160,9 @@ public class Livro {
                 ", dataPublicacao=" + dataPublicacao +
                 ", genero=" + genero +
                 ", preco=" + preco +
-                ", autor=" + autor +
+                ", dataCadastro=" + dataCadastro +
+                ", dataAtualizacao=" + dataAtualizacao +
+                ", idUsuario=" + idUsuario +
                 '}';
     }
 }
