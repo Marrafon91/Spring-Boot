@@ -1,9 +1,7 @@
 package io.github.marrafon91.libaryapi.controller;
 
 import io.github.marrafon91.libaryapi.controller.dto.CadastroLivroDTO;
-import io.github.marrafon91.libaryapi.controller.dto.ErroResposta;
 import io.github.marrafon91.libaryapi.controller.mappers.LivroMapper;
-import io.github.marrafon91.libaryapi.exceptions.RegistroDuplicadoException;
 import io.github.marrafon91.libaryapi.model.Livro;
 import io.github.marrafon91.libaryapi.service.LivroService;
 import jakarta.validation.Valid;
@@ -23,15 +21,10 @@ public class LivroController implements GenericController {
     private final LivroMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
-        try {
-            Livro livro = mapper.toEntity(dto);
-            service.salvar(livro);
-            var url = gerarHeaderLocation(livro.getId());
-            return ResponseEntity.created(url).build();
-        } catch (RegistroDuplicadoException e) {
-            var erroDTO = ErroResposta.conflito(e.getMessage());
-            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
-        }
+    public ResponseEntity<Void> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
+        Livro livro = mapper.toEntity(dto);
+        service.salvar(livro);
+        var url = gerarHeaderLocation(livro.getId());
+        return ResponseEntity.created(url).build();
     }
 }
