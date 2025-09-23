@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("autores")
 @RequiredArgsConstructor // (cria tods construtor injetado com final)
 
-public class AutorController {
+public class AutorController implements GenericController {
 
     private final AutorService service;
     private final AutorMapper mapper;
@@ -34,13 +34,7 @@ public class AutorController {
         try {
             Autor autor = mapper.toEntity(dto);
             service.salvar(autor);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(autor.getId())
-                    .toUri();
-
+            URI location = gerarHeaderLocation(autor.getId());
             return ResponseEntity.created(location).build();
         } catch (RegistroDuplicadoException e) {
             var erroDTO = ErroResposta.conflito(e.getMessage());
