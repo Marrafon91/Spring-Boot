@@ -7,6 +7,7 @@ import io.github.marrafon91.libaryapi.exceptions.RegistroDuplicadoException;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.service.AutorService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,15 +20,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("autores")
-//@RequiredArgsConstructor (cria tods construtor injetado com final, meu LOMBOK esta com erro nessa aplicacao)
+@RequiredArgsConstructor // (cria tods construtor injetado com final)
 
 public class AutorController {
 
     private final AutorService service;
 
-    public AutorController(AutorService service) {
-        this.service = service;
-    }
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDTO autor) {

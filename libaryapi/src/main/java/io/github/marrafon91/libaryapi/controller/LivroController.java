@@ -14,14 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("livros")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class LivroController {
 
     private final LivroService service;
-
-    public LivroController(LivroService service) {
-        this.service = service;
-    }
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
