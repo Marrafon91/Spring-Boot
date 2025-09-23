@@ -2,7 +2,9 @@ package io.github.marrafon91.libaryapi.controller;
 
 import io.github.marrafon91.libaryapi.controller.dto.CadastroLivroDTO;
 import io.github.marrafon91.libaryapi.controller.dto.ErroResposta;
+import io.github.marrafon91.libaryapi.controller.mappers.LivroMapper;
 import io.github.marrafon91.libaryapi.exceptions.RegistroDuplicadoException;
+import io.github.marrafon91.libaryapi.model.Livro;
 import io.github.marrafon91.libaryapi.service.LivroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class LivroController {
 
     private final LivroService service;
+    private final LivroMapper mapper;
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDTO dto) {
         try {
-
-            return ResponseEntity.ok(dto);
+            Livro livro = mapper.toEntity(dto);
+            service.salvar(livro);
+            return ResponseEntity.ok(livro);
         } catch (RegistroDuplicadoException e) {
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);

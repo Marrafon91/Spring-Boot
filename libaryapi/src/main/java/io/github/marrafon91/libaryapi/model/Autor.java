@@ -1,8 +1,12 @@
 package io.github.marrafon91.libaryapi.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +19,6 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -37,7 +40,9 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "autor",fetch = FetchType.LAZY)  //  cascade = CascadeType.ALL
+    @JsonIgnore
     private List<Livro> livros;
 
     @CreatedDate
@@ -48,7 +53,7 @@ public class Autor {
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
-    @Column(name = "id_usuario")
+    @JoinColumn(name = "id_usuario")
     private UUID idUsuario;
 
 

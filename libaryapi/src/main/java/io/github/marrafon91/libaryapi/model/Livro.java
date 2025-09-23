@@ -1,7 +1,10 @@
 package io.github.marrafon91.libaryapi.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,7 +17,6 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "autor")
@@ -43,7 +45,7 @@ public class Livro {
     @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)//cascade = CascadeType.ALL
     @JoinColumn(name = "id_autor")
     private  Autor autor;
 
@@ -55,6 +57,6 @@ public class Livro {
     @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
-    @Column(name = "id_usuario")
+    @JoinColumn(name = "id_usuario")
     private UUID idUsuario;
 }
