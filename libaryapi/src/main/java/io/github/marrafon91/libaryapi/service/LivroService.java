@@ -5,8 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class LivroService {
+
+    public LivroService(LivroRepository repository) {
+        this.repository = repository;
+    }
 
     private  final LivroRepository repository;
 }
