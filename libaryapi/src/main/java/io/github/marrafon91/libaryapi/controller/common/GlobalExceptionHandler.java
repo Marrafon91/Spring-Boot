@@ -2,6 +2,7 @@ package io.github.marrafon91.libaryapi.controller.common;
 
 import io.github.marrafon91.libaryapi.controller.dto.ErroCampo;
 import io.github.marrafon91.libaryapi.controller.dto.ErroResposta;
+import io.github.marrafon91.libaryapi.exceptions.CampoInvalidoException;
 import io.github.marrafon91.libaryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.marrafon91.libaryapi.exceptions.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErroResposta handleOperacaoNaoPermitidaException(OperacaoNaoPermitidaException e) {
         return ErroResposta.respostaPadrao(e.getMessage());
+    }
+
+    @ExceptionHandler(CampoInvalidoException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErroResposta handleCampoInvalidoException(CampoInvalidoException e) {
+        return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "Erro de Validação",
+                List.of(new ErroCampo(e.getCampo(), e.getMessage())));
     }
 
     @ExceptionHandler(RuntimeException.class)
