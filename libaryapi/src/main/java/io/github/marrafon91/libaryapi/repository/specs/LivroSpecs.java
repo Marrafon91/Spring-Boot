@@ -4,6 +4,8 @@ import io.github.marrafon91.libaryapi.model.GeneroLivro;
 import io.github.marrafon91.libaryapi.model.Livro;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
+
 public class LivroSpecs {
 
     public static Specification<Livro> isbnEqual(String isbn) {
@@ -17,4 +19,19 @@ public class LivroSpecs {
     public static Specification<Livro> generoEqual(GeneroLivro genero) {
         return (root, query, cb) -> cb.equal(root.get("genero"), genero);
     }
+
+    public static Specification<Livro> nomeAutorLike(String nome) {
+        return (root, query, cb) -> {
+            var autorJoin = root.join("autor"); // join explícito
+            return cb.like(cb.lower(autorJoin.get("nome")), "%" + nome.toLowerCase() + "%");
+        };
+    }
+
+    public static Specification<Livro> anoPublicacaoEqual(Integer anoPublicacao) {
+        return (root, query, cb) ->
+                cb.equal(cb.function("to_char", String.class,
+                        root.get("dataPublicacao"),
+                        cb.literal("YYYY")), anoPublicacao.toString());
+    }
+
 }

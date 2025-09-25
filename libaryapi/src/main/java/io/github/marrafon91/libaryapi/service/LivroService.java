@@ -3,15 +3,15 @@ package io.github.marrafon91.libaryapi.service;
 import io.github.marrafon91.libaryapi.model.GeneroLivro;
 import io.github.marrafon91.libaryapi.model.Livro;
 import io.github.marrafon91.libaryapi.repository.LivroRepository;
-import io.github.marrafon91.libaryapi.repository.specs.LivroSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import static io.github.marrafon91.libaryapi.repository.specs.LivroSpecs.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static io.github.marrafon91.libaryapi.repository.specs.LivroSpecs.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,20 +36,24 @@ public class LivroService {
 //        Specification<Livro> specs = Specification
 //                .where(LivroSpecs.isbnEqual(isbn))
 //                .and(LivroSpecs.tituloLike(titulo))
-//                .and(LivroSpecs.generoEqual(genero))
-        Specification<Livro> specs = Specification.where((root, query, cb) -> cb.conjunction())
+//                .and(LivroSpecs.generoEqual(genero))git
+        Specification<Livro> specs = Specification.where((root, query, cb) -> cb.conjunction());
 
-        if (isbn != null) {
+        if (isbn != null && !isbn.isBlank()) {
             specs = specs.and(isbnEqual(isbn));
         }
-        if (titulo != null) {
+        if (titulo != null && !titulo.isBlank()) {
             specs = specs.and(tituloLike(titulo));
         }
         if (genero != null) {
             specs = specs.and(generoEqual(genero));
         }
-
-
+        if (nomeAutor != null && !nomeAutor.isBlank()) {
+            specs = specs.and(nomeAutorLike(nomeAutor));
+        }
+        if (anoPublicacao != null) {
+            specs = specs.and(anoPublicacaoEqual(anoPublicacao));
+        }
         return  repository.findAll(specs);
     }
 }
