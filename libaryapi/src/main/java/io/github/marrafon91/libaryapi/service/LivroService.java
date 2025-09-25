@@ -3,9 +3,11 @@ package io.github.marrafon91.libaryapi.service;
 import io.github.marrafon91.libaryapi.model.GeneroLivro;
 import io.github.marrafon91.libaryapi.model.Livro;
 import io.github.marrafon91.libaryapi.repository.LivroRepository;
+import io.github.marrafon91.libaryapi.repository.specs.LivroSpecs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import static io.github.marrafon91.libaryapi.repository.specs.LivroSpecs.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +31,25 @@ public class LivroService {
         repository.delete(livro);
     }
 
-    public List<Livro> pesquisa(String isbn, String nomeAutor, GeneroLivro genero, Integer anoPublicacao) {
+    public List<Livro> pesquisa(String isbn, String titulo, String nomeAutor, GeneroLivro genero, Integer anoPublicacao) {
 
-        Specification<Livro> specs = null;
+//        Specification<Livro> specs = Specification
+//                .where(LivroSpecs.isbnEqual(isbn))
+//                .and(LivroSpecs.tituloLike(titulo))
+//                .and(LivroSpecs.generoEqual(genero))
+        Specification<Livro> specs = Specification.where((root, query, cb) -> cb.conjunction())
+
+        if (isbn != null) {
+            specs = specs.and(isbnEqual(isbn));
+        }
+        if (titulo != null) {
+            specs = specs.and(tituloLike(titulo));
+        }
+        if (genero != null) {
+            specs = specs.and(generoEqual(genero));
+        }
+
+
         return  repository.findAll(specs);
     }
 }
