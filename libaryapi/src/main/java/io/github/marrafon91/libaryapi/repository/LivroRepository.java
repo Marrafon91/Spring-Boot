@@ -3,6 +3,8 @@ package io.github.marrafon91.libaryapi.repository;
 import io.github.marrafon91.libaryapi.model.Autor;
 import io.github.marrafon91.libaryapi.model.GeneroLivro;
 import io.github.marrafon91.libaryapi.model.Livro;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,6 +25,9 @@ import java.util.UUID;
 public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecificationExecutor<Livro> {
 
     //https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
+
+    Page<Livro> findByAutor(Autor autor, Pageable pageable);
+
 
     //@Querry Method
     //select * from livro where id_autor = id
