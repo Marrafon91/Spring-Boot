@@ -6,8 +6,6 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.time.LocalDate;
-
 public class LivroSpecs {
 
     public static Specification<Livro> isbnEqual(String isbn) {
@@ -33,7 +31,7 @@ public class LivroSpecs {
         return (root, query, cb) -> {
             Join<Object, Object> joinAutor = root.join("autor", JoinType.INNER);
             return cb.like(cb.upper(joinAutor.get("nome")), "%" + nome.toUpperCase() + "%");
-            
+
 //            return cb.like(cb.upper(root.get("autor").get("nome")), "%" + nome.toUpperCase() + "%");
         };
     }
