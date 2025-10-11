@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: library
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 556626738751-25v6c174g6pn1cpl9g4ivgctd6d7plga.apps.googleusercontent.com
+            client-secret: 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
