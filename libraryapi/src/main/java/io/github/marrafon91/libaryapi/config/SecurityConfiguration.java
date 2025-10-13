@@ -28,28 +28,29 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-//                .formLogin(configurer -> {
-//                    configurer.loginPage("/login");
-//                })
-                .formLogin(Customizer.withDefaults())
+                .formLogin(configurer -> {
+                    configurer.loginPage("/login");
+                })
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/login/**").permitAll();
-                    authorize.requestMatchers(HttpMethod.POST,"/usuarios/**").permitAll();
-
-                    authorize.anyRequest().authenticated();
+                    authorize
+                            .requestMatchers("/login/**", "/error", "/oauth2/**").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .oauth2Login(oauth2 -> {
-                    oauth2.successHandler(sucessHandler);
+                    oauth2
+                            .loginPage("/login")
+                            .successHandler(sucessHandler);
                 })
                 .build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return  new BCryptPasswordEncoder(10);
+        return new BCryptPasswordEncoder(10);
     }
 
-//    @Bean
+    //    @Bean
     public UserDetailsService userDetailsService(UsuarioService usuarioService) {
 
 //        UserDetails user1 = User.builder()
