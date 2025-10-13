@@ -1,5 +1,6 @@
 package io.github.marrafon91.libaryapi.controller;
 
+import io.github.marrafon91.libaryapi.security.CustomAuthentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ public class LoginViewController {
     @GetMapping("/")
     @ResponseBody
     public String paginahome(Authentication authentication) {
-        return "Ola" + authentication.getName();
+        if (authentication instanceof CustomAuthentication customAuth) {
+            System.out.println(customAuth.getUsuario());
+        }
+        return "Olá" + authentication.getName();
     }
 }
