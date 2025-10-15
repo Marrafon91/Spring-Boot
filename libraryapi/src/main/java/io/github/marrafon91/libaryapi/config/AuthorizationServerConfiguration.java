@@ -57,7 +57,7 @@ public class AuthorizationServerConfiguration {
     public TokenSettings tokenSettings() {
         return TokenSettings.builder()
                 .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
-                .authorizationCodeTimeToLive(Duration.ofHours(1))
+                .authorizationCodeTimeToLive(Duration.ofMinutes(60))
                 .build();
     }
 
@@ -72,7 +72,7 @@ public class AuthorizationServerConfiguration {
     @Bean
     public JWKSource<SecurityContext> jwkSource() throws  Exception {
         RSAKey rsaKey = gerarChaveRSA();
-        JWKSet jwkSet = new JWKSet();
+        JWKSet jwkSet = new JWKSet(rsaKey);
         return new ImmutableJWKSet<>(jwkSet);
     }
 
@@ -94,6 +94,6 @@ public class AuthorizationServerConfiguration {
 
     @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource){
-        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource)
+        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
 }
