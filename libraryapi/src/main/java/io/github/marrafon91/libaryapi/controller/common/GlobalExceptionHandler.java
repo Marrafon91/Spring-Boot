@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +58,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ErroResposta handleAccesDeniedException(AccessDeniedException e) {
         return new ErroResposta(HttpStatus.FORBIDDEN.value(), "Acesso Negado!", List.of());
+    }
+
+    @ExceptionHandler(HttpClientErrorException.MethodNotAllowed.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ErroResposta handleMethodNotAllowed(HttpClientErrorException.MethodNotAllowed e) {
+        return new ErroResposta(HttpStatus.METHOD_NOT_ALLOWED.value(), "Método HTTP não permitido para este endpoint", List.of());
+
     }
 
     @ExceptionHandler(RuntimeException.class)

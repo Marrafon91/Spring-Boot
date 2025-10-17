@@ -1,5 +1,6 @@
 package io.github.marrafon91.libaryapi.config;
 
+import io.github.marrafon91.libaryapi.security.JwtCustomAunthenticationFilter;
 import io.github.marrafon91.libaryapi.security.LoginSocialSucessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -21,7 +23,8 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   LoginSocialSucessHandler sucessHandler) throws Exception {
+                                                   LoginSocialSucessHandler sucessHandler,
+                                                   JwtCustomAunthenticationFilter jwtCustomAunthenticationFilter) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
@@ -40,6 +43,7 @@ public class SecurityConfiguration {
                             .successHandler(sucessHandler);
                 })
                 .oauth2ResourceServer(oauth2rs -> oauth2rs.jwt(Customizer.withDefaults()))
+                .addFilterAfter(jwtCustomAunthenticationFilter, BearerTokenAuthenticationFilter.class)
                 .build();
     }
 
