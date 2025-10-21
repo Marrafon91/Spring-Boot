@@ -3,16 +3,11 @@ package io.github.marrafon91.libaryapi.controller;
 import io.github.marrafon91.libaryapi.controller.dto.AutorDTO;
 import io.github.marrafon91.libaryapi.controller.mappers.AutorMapper;
 import io.github.marrafon91.libaryapi.model.Autor;
-import io.github.marrafon91.libaryapi.model.Usuario;
-import io.github.marrafon91.libaryapi.security.SecurityService;
 import io.github.marrafon91.libaryapi.service.AutorService;
-import io.github.marrafon91.libaryapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
