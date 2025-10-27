@@ -28,6 +28,7 @@ spring:
 
 logging:
   pattern:
+#    comando para mudar as cores dos logs no console!!!
     console: '%clr(%d{dd-MM-yyyy HH:mm:ss}){faint} %clr(%5p) %clr([%t]){faint} %clr(%-40.40logger){blue} %clr(:){yellow} %m%n'
   file:
     name: app.log
@@ -43,6 +44,14 @@ logging:
 
 #Os 5 nives de logging
 # trace, debug, info, warn, error
+
+management:
+  server:
+    port: 9090 #ideal colocar uma porta separada para o ACTUATOR!!!
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 springdoc:
   override-with-generic-response: false
