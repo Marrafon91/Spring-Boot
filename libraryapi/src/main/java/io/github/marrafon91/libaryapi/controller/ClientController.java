@@ -5,33 +5,31 @@ import io.github.marrafon91.libaryapi.repository.ClientRepository;
 import io.github.marrafon91.libaryapi.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
+@Slf4j
 public class ClientController {
 
     private final ClientService service;
     private final ClientRepository repository;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('GERENTE')")
-    public ResponseEntity<Void> salvar(@RequestBody @Valid Client client) {
-        Client salvar = service.salvar(client);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(salvar.getId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+    public void salvar(@RequestBody @Valid Client client) {
+        log.info("Registrando novo Client: {} com scope: {} ", client.getClientId(), client.getScope());
+        service.salvar(client);
+
     }
 
     @GetMapping
