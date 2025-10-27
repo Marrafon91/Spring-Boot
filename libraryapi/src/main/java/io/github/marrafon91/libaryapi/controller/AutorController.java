@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("autores")
-@RequiredArgsConstructor // (cria tods construtor injetado com final)
-@Tag(name = "Autores")
+@RequiredArgsConstructor // (cria todos construtor injetado com final via Lombok)
+@Tag(name = "Autores") // Mapeia o nome no Swager
 public class AutorController implements GenericController {
 
     private final AutorService service;
