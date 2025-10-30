@@ -1,9 +1,6 @@
 spring:
   application:
     name: library
-  profiles:
-    active: production
-
   output:
     ansi:
       enabled: ALWAYS
