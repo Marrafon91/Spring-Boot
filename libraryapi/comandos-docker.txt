@@ -13,3 +13,6 @@ docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGR
  run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
 
 # Flag -d para continar rodando com o terminal fechado
+
+# criando connexao para banco postgres em PRODUCAO
+docker run --name librarydb-prod -e POSTGRES_PASSWORD=postgresprod -e POSTGRES_USER=postgresprod -e POSTGRES_DB=library -p 5433:5432 -d --network library-network postgres:17.6
