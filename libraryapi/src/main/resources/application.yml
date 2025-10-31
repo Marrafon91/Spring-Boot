@@ -1,8 +1,9 @@
 spring:
   application:
     name: library
-  profiles:
-    active: production
+#  profiles:
+#    active: production
+#SPRING_PROFILES_ACTIVE=production
 
   output:
     ansi:
@@ -43,7 +44,7 @@ logging:
     org:
       springframework:
         web: debug
-        security: trace
+        security: info
 
 #Os 5 nives de logging
 # trace, debug, info, warn, error
@@ -58,3 +59,23 @@ management:
 
 springdoc:
   override-with-generic-response: false
+
+#Production a cada (---) cria um novo documento.
+---
+spring:
+  config:
+    active:
+      on-profile: production #separado por virgula posso colocar quantos perfil eu quiser
+  jpa:
+    show-sql: false
+
+#Homologacao a cada (---) cria um novo documento.
+---
+spring:
+  config:
+    active:
+      on-profile: homologacao
+  jpa:
+    show-sql: false
+#  datasource:
+#    url: outro banco exemplificando.....

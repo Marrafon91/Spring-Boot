@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: library
-  jpa:
-    show-sql: false
