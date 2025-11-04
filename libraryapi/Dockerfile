@@ -1,30 +1,28 @@
-#build
-FROM maven:3.8.8-amazoncorretto-21-al2023 as build
+# ====== BUILD STAGE ======
+FROM maven:3.8.8-amazoncorretto-21-al2023 AS build
 WORKDIR /build
 
 COPY . .
 
 RUN mvn clean package -DskipTests
 
-#run
-FROM amazoncorretto:21.0.5
+
+# ====== RUNTIME STAGE ======
+FROM amazoncorretto:21.0.5 AS runtime
 WORKDIR /app
 
-COPY --from=build ./build/target/*.jar ./libraryapi.jar
+COPY --from=build /build/target/*.jar /app/libraryapi.jar
 
 EXPOSE 8080
 EXPOSE 9090
 
-ENV SPRING_DATASOURCE_URL=''
-ENV SPRING_DATASOURCE_USERNAME=''
-ENV SPRING_DATASOURCE_PASSWORD=''
-ENV GOOGLE_CLINET_ID='client_id'
-ENV GOOGLE_CLIENT_SECRET='client_secret'
+# ✅ Evite deixar segredos dentro da imagem
+# (Defina essas variáveis externamente com `docker run -e` ou `--env-file`)
+ENV SPRING_PROFILES_ACTIVE=production
+ENV TZ=America/Sao_Paulo
 
-ENV SPRING_PROFILES_ACTIVE='production'
-ENV TZ='America/Sao_Paulo'
+# ✅ Forma JSON recomendada para o ENTRYPOINT
+ENTRYPOINT ["java", "-jar", "libraryapi.jar"]
 
-ENTRYPOINT java -jar libraryapi.jar
-
-#LABEL authors="Guilherme"
-
+# LABEL (mantido)
+LABEL authors="Guilherme Marrafon"
