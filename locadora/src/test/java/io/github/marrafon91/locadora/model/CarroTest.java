@@ -13,4 +13,16 @@ class CarroTest {
         double total = carro.calcularValorAluguel(3);
         Assertions.assertEquals(300.0,total);
     }
+
+    @Test
+    @DisplayName("deve calcular o valor do aluguel com desconto")
+    void deveCalcularValorAluguelComDesconto() {
+
+        Carro carro = new Carro("Sedan", 100.0);
+        int quantidadeDias = 5;
+
+        double total = carro.calcularValorAluguel(quantidadeDias);
+
+        Assertions.assertEquals(450.0,total);
+    }
 }
