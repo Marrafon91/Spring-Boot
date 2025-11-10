@@ -22,11 +22,15 @@ public class CarroEntity {
     @Column(name = "valor_diario")
     private double valorDiario;
 
+    @Column(name = "ano")
+    private int ano;
+
     public CarroEntity() {
     }
 
-    public CarroEntity(String modelo, double valorDiario) {
+    public CarroEntity(String modelo, double valorDiario, int ano) {
         this.modelo = modelo;
         this.valorDiario = valorDiario;
+        this.ano = ano;
     }
 }

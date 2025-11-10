@@ -26,6 +26,7 @@ public class CarroRepositorySQLTest {
         var carro = lista.stream().findFirst().get();
 
         assertEquals(1, lista.size());
+
         assertThat(carro.getValorDiario()).isEqualTo(150.00);
         assertThat(carro.getModelo()).isEqualTo("SUV");
     }
