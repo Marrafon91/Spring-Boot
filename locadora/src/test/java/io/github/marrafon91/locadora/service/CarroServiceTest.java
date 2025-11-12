@@ -2,14 +2,13 @@ package io.github.marrafon91.locadora.service;
 
 import io.github.marrafon91.locadora.entity.CarroEntity;
 import io.github.marrafon91.locadora.repository.CarroRepository;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class CarroServiceTest {
@@ -22,14 +21,21 @@ class CarroServiceTest {
 
     @Test
     void deveSalvarUmCarro() {
+        CarroEntity carroParaSalvar = new CarroEntity("Sedan",100.00,2026);
+        carroParaSalvar.setId(1L);
 
-        Mockito.when(repository.findById(1L))
-                .thenReturn(Optional.of(new CarroEntity("Mock Sedan",100.00,2026)));
+        CarroEntity carroParaRetornar = new CarroEntity("Sedan",200.00,2026);
+        carroParaRetornar.setId(1L);
 
-        Optional<CarroEntity> carroEncontrado = repository.findById(1L);
-        System.out.println(carroEncontrado.get().getModelo());
-        System.out.println(carroEncontrado.get().getValorDiario());
-        System.out.println(carroEncontrado.get().getAno());
+        Mockito.when(repository.save(Mockito.any()))
+                .thenReturn(carroParaRetornar);
+
+         var carroSalvo = service.salvar(carroParaSalvar);
+
+        assertNotNull(carroSalvo);
+        assertEquals("Sedan",carroSalvo.getModelo());
+
+        Mockito.verify(repository).save(Mockito.any());
     }
 
     @Test
