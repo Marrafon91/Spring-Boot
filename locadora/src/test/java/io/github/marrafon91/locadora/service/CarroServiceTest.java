@@ -2,13 +2,17 @@ package io.github.marrafon91.locadora.service;
 
 import io.github.marrafon91.locadora.entity.CarroEntity;
 import io.github.marrafon91.locadora.repository.CarroRepository;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class CarroServiceTest {
@@ -20,7 +24,7 @@ class CarroServiceTest {
     CarroRepository repository;
 
     @Test
-    void deveSalvarUmCarro() {
+    void SalvarUmCarro() {
         CarroEntity carroParaSalvar = new CarroEntity("Sedan",100.00,2026);
         carroParaSalvar.setId(1L);
 
@@ -39,18 +43,14 @@ class CarroServiceTest {
     }
 
     @Test
-    void atualizar() {
-    }
+    @DisplayName("Teste que deve dar erro ao tentar salvar um carro qual a diaria é negativa")
+    void diariaNegativa() {
+        CarroEntity carro = new CarroEntity("Sedan",0,2026);
 
-    @Test
-    void deletar() {
-    }
+        var erro = catchThrowable(() -> service.salvar(carro));
 
-    @Test
-    void buscarPorId() {
-    }
+        assertThat(erro).isInstanceOf(IllegalArgumentException.class);
 
-    @Test
-    void listarTodos() {
+        Mockito.verify(repository, Mockito.never()).save(Mockito.any());
     }
 }
