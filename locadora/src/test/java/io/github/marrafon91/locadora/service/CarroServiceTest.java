@@ -35,7 +35,7 @@ class CarroServiceTest {
         CarroEntity carroParaSalvar = new CarroEntity("Sedan",100.00,2026);
         carroParaSalvar.setId(1L);
 
-        CarroEntity carroParaRetornar = new CarroEntity("Omega",200.00,2026);
+        CarroEntity carroParaRetornar = new CarroEntity("Sedan",200.00,2026);
         carroParaRetornar.setId(1L);
 
         when(repository.save(any()))
