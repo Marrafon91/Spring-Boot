@@ -1,6 +1,7 @@
 package io.github.marrafon91.locadora.controller;
 
 import io.github.marrafon91.locadora.entity.CarroEntity;
+import io.github.marrafon91.locadora.model.exception.EntityNotFoundException;
 import io.github.marrafon91.locadora.service.CarroService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,5 +54,29 @@ class CarroControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.modelo").value("Honda Civic"));
+    }
+
+    @Test
+    void deveObterDetalhesCarro() throws Exception {
+        when(carroService.buscarPorId(Mockito.any())).thenReturn(new CarroEntity(
+                1L, "Civic", 250, 2028
+        ));
+
+        mvc.perform(
+                get("/carros/1")
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.modelo").value("Civic"))
+                .andExpect(jsonPath("$.valorDiario").value(250.0))
+                .andExpect(jsonPath("$.ano").value(2028));
+    }
+
+    @Test
+    void deveRetornarNotFoundCarroInexistente() throws Exception {
+        when(carroService.buscarPorId(Mockito.any())).thenThrow(EntityNotFoundException.class);
+        mvc.perform(
+                get("/carros/1")
+        ).andExpect(status().isNotFound());
     }
 }

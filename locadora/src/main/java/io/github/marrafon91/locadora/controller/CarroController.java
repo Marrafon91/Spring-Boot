@@ -1,6 +1,7 @@
 package io.github.marrafon91.locadora.controller;
 
 import io.github.marrafon91.locadora.entity.CarroEntity;
+import io.github.marrafon91.locadora.model.exception.EntityNotFoundException;
 import io.github.marrafon91.locadora.service.CarroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,16 @@ public class CarroController {
                     .status(HttpStatus
                     .UNPROCESSABLE_ENTITY)
                     .body(e.getMessage());
+        }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<CarroEntity> DetalhesCarro(@PathVariable("id") Long id) {
+        try {
+            var carroEncontrado = service.buscarPorId(id);
+            return ResponseEntity.ok(carroEncontrado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }
