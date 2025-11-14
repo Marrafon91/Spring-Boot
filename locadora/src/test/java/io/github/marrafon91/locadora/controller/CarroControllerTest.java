@@ -14,10 +14,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -137,5 +135,23 @@ class CarroControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
         ).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deveDeletarUmCarro() throws Exception {
+        doNothing().when(carroService).deletar(Mockito.any());
+
+        mvc.perform(
+                delete("/carros/1"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void deveRetornarNotFoundAoDeletarUmCarroInexistente() throws Exception {
+        doThrow(EntityNotFoundException.class).when(carroService).deletar(Mockito.any());
+
+        mvc.perform(
+                delete("/carros/1"))
+                .andExpect(status().isNotFound());
     }
 }
