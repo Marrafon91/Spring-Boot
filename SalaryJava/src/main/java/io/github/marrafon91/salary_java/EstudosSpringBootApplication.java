@@ -1,6 +1,7 @@
 package io.github.marrafon91.salary_java;
 
 import io.github.marrafon91.salary_java.entities.Employee;
+import io.github.marrafon91.salary_java.services.BrasilTaxService;
 import io.github.marrafon91.salary_java.services.PensionService;
 import io.github.marrafon91.salary_java.services.SalaryService;
 import io.github.marrafon91.salary_java.services.TaxService;
@@ -26,7 +27,7 @@ public class EstudosSpringBootApplication {
 
 		Employee employee = new Employee(name, grossSalary);
 
-		TaxService taxService = new TaxService();
+		TaxService taxService = new BrasilTaxService();
 		PensionService pensionService = new PensionService();
 
 		SalaryService salaryService = new SalaryService(taxService, pensionService);
