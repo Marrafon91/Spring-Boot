@@ -1,17 +1,18 @@
 package io.github.marrafon91.exercicio.services;
 
 import io.github.marrafon91.exercicio.entities.Order;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
 
-    private final ShippingService shippingService;
+    @Autowired
+    private  ShippingService shippingService;
 
     public double total(Order order) {
-        double basicValue = order.getBasic() - order.getDiscount();
+        double discountAmount = order.getBasic() * order.getDiscount() / 100;
+        double basicValue = order.getBasic() - discountAmount;
         double shippingFee = shippingService.shipment(order);
         return basicValue + shippingFee;
     }

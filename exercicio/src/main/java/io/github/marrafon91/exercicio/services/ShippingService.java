@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShippingService {
     public double shipment(Order order) {
-        
+
         double shippingFee = order.getBasic() - order.getDiscount();
 
         if (shippingFee <= 100.0) {
