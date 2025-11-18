@@ -43,7 +43,7 @@
 <!--				<artifactId>maven-resources-plugin</artifactId>-->
 <!--				<version>3.1.0</version> &lt;!&ndash;$NO-MVN-MAN-VER$ &ndash;&gt;-->
 <!--			</plugin>-->
-			
+
 			<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
