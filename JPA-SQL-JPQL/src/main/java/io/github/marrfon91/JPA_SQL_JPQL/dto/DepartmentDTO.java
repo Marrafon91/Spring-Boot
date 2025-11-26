@@ -1,8 +1,15 @@
 package io.github.marrfon91.JPA_SQL_JPQL.dto;
 
-public record DepartmentDTO(Long id, String name){}
+import io.github.marrfon91.JPA_SQL_JPQL.entities.Department;
 
+public record DepartmentDTO(Long id,
+                            String name
+) {
 
-
-
-
+    public DepartmentDTO(Department entity) {
+        this(
+                entity.getId(),
+                entity.getName()
+        );
+    }
+}
