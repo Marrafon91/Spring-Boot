@@ -1,5 +1,6 @@
 package io.github.marrfon91.JPA_SQL_JPQL.controllers;
 
+import io.github.marrfon91.JPA_SQL_JPQL.dto.PersonDTO;
 import io.github.marrfon91.JPA_SQL_JPQL.dto.PersonDepartmentDTO;
 import io.github.marrfon91.JPA_SQL_JPQL.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,17 @@ public class PersonController implements GenericController {
     @Autowired
     PersonService service;
 
-    @PostMapping
+    //@PostMapping
     public ResponseEntity<PersonDepartmentDTO> insert(@RequestBody PersonDepartmentDTO dto) {
         dto = service.insert(dto);
         URI uri = genericHeaderLocation(dto.id());
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PostMapping
+    public ResponseEntity<PersonDTO> insert(@RequestBody PersonDTO dto) {
+        dto = service.insert(dto);
+        URI uri = genericHeaderLocation(dto.id());
+        return ResponseEntity.created(uri).body(dto);
+    }
 }

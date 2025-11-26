@@ -1,5 +1,6 @@
 package io.github.marrfon91.JPA_SQL_JPQL.services;
 
+import io.github.marrfon91.JPA_SQL_JPQL.dto.PersonDTO;
 import io.github.marrfon91.JPA_SQL_JPQL.dto.PersonDepartmentDTO;
 import io.github.marrfon91.JPA_SQL_JPQL.entities.Department;
 import io.github.marrfon91.JPA_SQL_JPQL.entities.Person;
@@ -26,6 +27,19 @@ public class PersonService {
 
         entity = repository.save(entity);
         return new PersonDepartmentDTO(entity);
+    }
+
+    public PersonDTO insert(PersonDTO dto) {
+        Person entity = new Person();
+        entity.setName(dto.name());
+        entity.setSalary(dto.salary());
+
+        Department dept = departmentRepository.getReferenceById(dto.departmentId());
+
+        entity.setDepartment(dept);
+        entity = repository.save(entity);
+
+        return new PersonDTO(entity);
     }
 
     private void copyDtoToDepartment(PersonDepartmentDTO dto, Department dept) {
