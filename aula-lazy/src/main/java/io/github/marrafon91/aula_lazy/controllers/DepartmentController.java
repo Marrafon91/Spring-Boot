@@ -25,7 +25,7 @@ public class DepartmentController {
         return ResponseEntity.ok(obj);
     }
 
-    @GetMapping
+    @GetMapping("/{id}/employees")
     public  ResponseEntity<List<EmployeeMinDTO>> findEmployeesByDepartment(@PathVariable Long id) {
         List<EmployeeMinDTO> list = service.findEmployeesByDepartment(id);
         return ResponseEntity.ok(list);

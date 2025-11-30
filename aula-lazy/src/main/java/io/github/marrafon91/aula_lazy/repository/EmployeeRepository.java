@@ -10,4 +10,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT obj FROM Employee obj JOIN FETCH obj.department")
     List<Employee> findEmployeesWithDepartments();
+
+    List<Employee> findByNameContainingIgnoreCase(String name);
 }
+
+// site para consultas de Query Methods em JPA
+// https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html#jpa.query-methods.at-query
