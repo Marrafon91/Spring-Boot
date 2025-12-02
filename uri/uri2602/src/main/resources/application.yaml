@@ -1,6 +1,9 @@
 spring:
   application:
-    name: uri
+    name: uri2602
+
+  profiles:
+    active: dev
 
   datasource:
     url: jdbc:postgresql://localhost:5432/uri

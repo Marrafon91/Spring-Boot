@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.github.marrafon91</groupId>
-	<artifactId>uri</artifactId>
+	<artifactId>uri2602</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>uri</name>
 	<description>Demo project for Spring Boot</description>
