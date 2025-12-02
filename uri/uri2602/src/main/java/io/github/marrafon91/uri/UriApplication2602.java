@@ -26,7 +26,7 @@ public class UriApplication2602 implements CommandLineRunner {
 		List<CustomerMinProjection> list = repository.search1("RS");
 		List<CustomerMinDTO> result1 = list.stream().map(CustomerMinDTO::new).toList();
 
-		for (CustomerMinProjection obj : list) {
+		for (CustomerMinDTO obj : result1) {
 			System.out.println(obj);
 		}
 	}
