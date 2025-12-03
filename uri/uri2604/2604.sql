@@ -21,3 +21,9 @@ VALUES
   
   /*  Execute this query to drop the tables */
   -- DROP TABLE products; --
+
+  -- REPOSTA
+  SELECT products.id, products.name
+  FROM products
+  WHERE products.price < 10
+  OR products.price > 100
