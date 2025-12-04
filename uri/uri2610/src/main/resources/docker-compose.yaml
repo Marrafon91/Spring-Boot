@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:17.6
+    container_name: uri_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: uri
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - uri-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: uri_pgadmin
+    restart: always
+    ports:
+      - "15432:5050"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - postgres
+    networks:
+      - uri-network
+
+networks:
+  uri-network:
+
+volumes:
+  postgres_data:
