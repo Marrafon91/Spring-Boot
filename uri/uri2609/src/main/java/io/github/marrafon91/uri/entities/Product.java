@@ -14,17 +14,17 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "id_categories")
-    private Category categories;
+    private Category category;
 
     public Product() {
     }
 
-    public Product(Long id, String name, Integer amount, Double price, Category categories) {
+    public Product(Long id, String name, Integer amount, Double price, Category category) {
         this.id = id;
         this.name = name;
         this.amount = amount;
         this.price = price;
-        this.categories = categories;
+        this.category = category;
     }
 
     public Long getId() {
@@ -59,11 +59,11 @@ public class Product {
         this.price = price;
     }
 
-    public Category getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Category categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
