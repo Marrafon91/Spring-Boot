@@ -20,6 +20,10 @@ public class Empregado {
     @OneToMany(mappedBy = "supervisor")
     private List<Empregado> supervisionados = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "dnumero")
+    private Departamento departamento;
+
     @ManyToMany
     @JoinTable(name = "trabalha",
      joinColumns = @JoinColumn(name = "cpf_emp"),
@@ -29,11 +33,12 @@ public class Empregado {
     public Empregado() {
     }
 
-    public Empregado(String cpf, String enome, Double salary, Empregado supervisor) {
+    public Empregado(String cpf, String enome, Double salary, Empregado supervisor, Departamento departamento) {
         this.cpf = cpf;
         this.enome = enome;
         this.salary = salary;
         this.supervisor = supervisor;
+        this.departamento = departamento;
     }
 
     public String getCpf() {
@@ -66,6 +71,14 @@ public class Empregado {
 
     public void setSupervisor(Empregado supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 
     public List<Empregado> getSupervisionados() {
