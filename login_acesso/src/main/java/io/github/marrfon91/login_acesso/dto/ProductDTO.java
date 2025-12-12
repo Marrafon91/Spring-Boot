@@ -1,4 +1,4 @@
-package dto;
+package io.github.marrfon91.login_acesso.dto;
 
 import io.github.marrfon91.login_acesso.entities.Product;
 
