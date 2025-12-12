@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/prdoducts")
+@RequestMapping("/products")
 public class ProductController implements GenericController {
 
     @Autowired
