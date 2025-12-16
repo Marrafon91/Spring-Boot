@@ -5,7 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
@@ -22,7 +25,7 @@ public class User implements UserDetails {
     private LocalDate birthDate;
     private String password;
 
-    @ManyToMany
+    @ManyToMany//(fetch = FetchType.EAGER) não é uma boa pratica.
     @JoinTable(name = "tb_user_role",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
