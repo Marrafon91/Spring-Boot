@@ -11,3 +11,10 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 
+
+-- Caso precise do application.properties
+-- security.client-id=${CLIENT_ID:myclientid}
+-- security.client-secret=${CLIENT_SECRET:myclientsecret}
+-- security.jwt.duration=${JWT_DURATION:86400}
+-- cors.origins=${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+
