@@ -80,11 +80,11 @@ public class ResourceServerConfig {
 		return source;
 	}
 
-	@Bean
-	FilterRegistrationBean<CorsFilter> corsFilter() {
-		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(
-				new CorsFilter(corsConfigurationSource()));
-		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-		return bean;
-	}
+//	@Bean
+//	FilterRegistrationBean<CorsFilter> corsFilter() {
+//		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(
+//				new CorsFilter(corsConfigurationSource()));
+//		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//		return bean;
+//	}
 }

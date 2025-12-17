@@ -17,4 +17,5 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 -- security.client-secret=${CLIENT_SECRET:myclientsecret}
 -- security.jwt.duration=${JWT_DURATION:86400}
 -- cors.origins=${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+-- CORS_ORIGINS=http://localhost:3000,http://localhost:5173;SECURITY_JWT_DURATION=86400;SECURITY_CLIENT_ID=myclientid;SECURITY_CLIENT_SECRET=myclientsecret
 
