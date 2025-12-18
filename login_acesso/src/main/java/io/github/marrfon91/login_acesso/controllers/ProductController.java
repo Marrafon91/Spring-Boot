@@ -4,6 +4,7 @@ import io.github.marrfon91.login_acesso.dto.ProductDTO;
 import io.github.marrfon91.login_acesso.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -17,6 +18,7 @@ public class ProductController implements GenericController {
     private ProductService productService;
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATOR')")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         ProductDTO dto = productService.findById(id);
         return ResponseEntity.ok(dto);
@@ -29,6 +31,7 @@ public class ProductController implements GenericController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
         dto = productService.insert(dto);
         URI location = headerLocation(dto.id());
