@@ -9,10 +9,6 @@ spring:
     ansi:
       enabled: ALWAYS
 
-#  cors:
-#    origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
-
-
 logging:
   pattern:
     console: >
@@ -22,14 +18,32 @@ logging:
       %clr(%-50.50logger{0}){blue}
       %clr(:){yellow}
       %m
-
 ---
 
-# TEST (profile test)
 spring:
   config:
     activate:
       on-profile: test
+
+  #security:
+  #  client-id: myclientid
+  #  client-secret: myclientsecret
+  #  jwt:
+  #    duration: 86400
+  #
+  #cors:
+  #  origins: http://localhost:3000,http://localhost:5173
+  #
+  # USEI VARIAVEIS DE AMBIENTE DIRETAMENTE NO INTELLIJ.
+
+security:
+  client-id: ${SECURITY_CLIENT_ID}
+  client-secret: ${SECURITY_CLIENT_SECRET}
+  jwt:
+    duration: ${SECURITY_JWT_DURATION}
+  cors:
+    origins: ${CORS_ORIGINS}
+
 
   datasource:
     url: jdbc:h2:mem:login

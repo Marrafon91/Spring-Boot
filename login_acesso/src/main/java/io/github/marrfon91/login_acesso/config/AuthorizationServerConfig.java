@@ -51,13 +51,13 @@ import java.util.UUID;
 @Configuration
 public class AuthorizationServerConfig {
 
-    @Value("${security_client_id}")
+    @Value("${security.client-id}")
     private String clientId;
 
-    @Value("${security_client_secret}")
+    @Value("${security.client-secret}")
     private String clientSecret;
 
-    @Value("${security_jwt_duration}")
+    @Value("${security.jwt.duration}")
     private Integer jwtDurationSeconds;
 
     @Autowired
